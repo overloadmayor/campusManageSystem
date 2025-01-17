@@ -99,6 +99,7 @@ public class StudentsServiceImpl extends ServiceImpl<StudentsMapper, Students> i
                 .eq(students.getMajor() != null, Students::getMajor, students.getMajor())
                 .page(page);
         res.getRecords().stream().forEach(stu->stu.setPassword(null));
+
         return ResponseResult.okResult(res);
     }
 }
