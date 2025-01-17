@@ -18,9 +18,14 @@
     </properties>
     <modules>
         <module>user-gateway</module>
+        <module>admin-gateway</module>
     </modules>
 
     <dependencies>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-gateway</artifactId>

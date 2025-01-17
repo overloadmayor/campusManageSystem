@@ -9,11 +9,21 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.sql.SQLException;
+
 @ControllerAdvice  //控制器增强类
 //@Slf4j
 public class ExceptionCatch {
 
     private static final Logger log = LoggerFactory.getLogger(ExceptionCatch.class);
+
+    @ExceptionHandler(SQLException.class)
+    @ResponseBody
+    public ResponseResult exception(SQLException e){
+        e.printStackTrace();
+        log.error("catch exception:{}",e.getMessage());
+        return ResponseResult.errorResult(AppHttpCodeEnum.SERVER_ERROR,e.getMessage());
+    }
 
     /**
      * 处理不可控异常

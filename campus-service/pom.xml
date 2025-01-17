@@ -11,6 +11,8 @@
 
     <modules>
         <module>user-service</module>
+        <module>admin-service</module>
+        <module>majorAndDept-service</module>
     </modules>
 
     <artifactId>campus-service</artifactId>
@@ -22,6 +24,10 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.campus</groupId>
             <artifactId>campus-common</artifactId>
@@ -47,6 +53,10 @@
         <dependency>
             <groupId>com.campus</groupId>
             <artifactId>campus-utils</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.campus</groupId>
+            <artifactId>campus-openfeign-api</artifactId>
         </dependency>
     </dependencies>
 

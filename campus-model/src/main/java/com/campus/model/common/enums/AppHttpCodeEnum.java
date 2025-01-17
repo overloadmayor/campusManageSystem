@@ -14,6 +14,8 @@ public enum AppHttpCodeEnum {
     // SIGN验签 100~120
     SIGN_INVALID(100,"无效的SIGN"),
     SIG_TIMEOUT(101,"SIGN已过期"),
+    // 用户错误 400~500
+    USER_INVALID(403,"权限不足"),
     // 参数错误 500~1000
     PARAM_REQUIRE(500,"缺少参数"),
     PARAM_INVALID(501,"无效参数"),

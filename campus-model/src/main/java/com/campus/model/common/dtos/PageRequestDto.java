@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class PageRequestDto {
 
-    private Integer size;
+    private Integer pageSize;
     private Integer page;
 
 //    public void checkParam() {

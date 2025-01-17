@@ -9,4 +9,8 @@ spring:
         server-addr: 110.41.41.85:8848
       config:
         server-addr: 110.41.41.85:8848
-        file-extension: yml
+        file-extension: yaml
+        shared-configs:
+          - data-id: shared-jdbc.yaml
+          - data-id: shared-log.yaml
+

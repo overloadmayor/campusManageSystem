@@ -21,6 +21,7 @@
         <module>campus-service</module>
         <module>campus-gateway</module>
         <module>campus-utils</module>
+        <module>campus-openfeign-api</module>
     </modules>
 
 
@@ -36,11 +37,11 @@
         <spring.boot.version>2.3.9.RELEASE</spring.boot.version>
         <commons.io.version>2.6</commons.io.version>
         <commons.codec.version>1.12</commons.codec.version>
-        <lombok.version>1.18.8</lombok.version>
+        <lombok.version>1.18.24</lombok.version>
         <mysql.version>5.1.46</mysql.version>
         <mybatis.version>3.5.1</mybatis.version>
         <mybatis.spring.version>2.0.1</mybatis.spring.version>
-        <mybatis.plus.version>3.4.1</mybatis.plus.version>
+        <mybatis.plus.version>3.5.3.1</mybatis.plus.version>
         <lang3.version>3.5</lang3.version>
         <pagehelper.version>1.2.3</pagehelper.version>
         <jsoup.version>1.10.2</jsoup.version>
@@ -66,6 +67,7 @@
         <knife4j.version>2.0.2</knife4j.version>
         <com.alibaba.cloud>2.2.5.RELEASE</com.alibaba.cloud>
         <xxl.job.version>2.2.0-SNAPSHOT</xxl.job.version>
+        <hutool.version>5.8.11</hutool.version>
     </properties>
 
     <dependencies>
@@ -80,12 +82,18 @@
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
         </dependency>
+
     </dependencies>
 
     <dependencyManagement>
 
         <dependencies>
             <!--内部依赖工程-->
+            <dependency>
+                <groupId>com.campus</groupId>
+                <artifactId>campus-openfeign-api</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
             <dependency>
                 <groupId>com.campus</groupId>
                 <artifactId>campus-model</artifactId>
@@ -309,7 +317,13 @@
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis.plus.version}</version>
             </dependency>
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
         </dependencies>
+
     </dependencyManagement>
 
 <!--    <build>-->

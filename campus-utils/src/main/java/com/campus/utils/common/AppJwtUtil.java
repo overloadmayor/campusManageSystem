@@ -33,6 +33,25 @@ public class AppJwtUtil {
                 .compact();
     }
 
+    // 生产ID
+    public static String getToken(Long id,Integer isAdmin){
+        Map<String, Object> claimMaps = new HashMap<>();
+        claimMaps.put("id",id);
+        claimMaps.put("isAdmin",isAdmin);
+        long currentTime = System.currentTimeMillis();
+        return Jwts.builder()
+                .setId(UUID.randomUUID().toString())
+                .setIssuedAt(new Date(currentTime))  //签发时间
+                .setSubject("system")  //说明
+                .setIssuer("heima") //签发者信息
+                .setAudience("app")  //接收用户
+                .compressWith(CompressionCodecs.GZIP)  //数据压缩方式
+                .signWith(SignatureAlgorithm.HS512, generalKey()) //加密方式
+                .setExpiration(new Date(currentTime + TOKEN_TIME_OUT * 1000))  //过期时间戳
+                .addClaims(claimMaps) //cla信息
+                .compact();
+    }
+
     /**
      * 获取token中的claims信息
      *
