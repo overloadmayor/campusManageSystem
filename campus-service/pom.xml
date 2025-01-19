@@ -13,6 +13,7 @@
         <module>user-service</module>
         <module>admin-service</module>
         <module>majorAndDept-service</module>
+        <module>teacher-service</module>
     </modules>
 
     <artifactId>campus-service</artifactId>

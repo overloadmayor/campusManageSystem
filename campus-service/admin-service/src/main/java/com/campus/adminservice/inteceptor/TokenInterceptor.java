@@ -8,7 +8,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class AdminTokenInterceptor implements HandlerInterceptor {
+public class TokenInterceptor implements HandlerInterceptor {
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
@@ -18,11 +18,10 @@ public class AdminTokenInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String userId=request.getHeader("userId");
-        String isAdmin=request.getHeader("isAdmin");
-        if(userId!=null&&isAdmin!=null){
+
+        if(userId!=null){
             Teacher teacher=new Teacher();
             teacher.setId(Integer.valueOf(userId).longValue());
-            teacher.setAdmin(Integer.valueOf(isAdmin).intValue());
             AdminThreadLocalUtil.setUser(teacher);
         }
         return true;

@@ -19,6 +19,7 @@
     <modules>
         <module>user-gateway</module>
         <module>admin-gateway</module>
+        <module>teacher-gateway</module>
     </modules>
 
     <dependencies>

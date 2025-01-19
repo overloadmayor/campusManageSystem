@@ -1,4 +1,4 @@
-package com.campus.usergateway.util;
+package com.campus.utils.common;
 
 import io.jsonwebtoken.*;
 
@@ -6,10 +6,10 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.util.*;
 
-public class UserJwtUtil {
+public class StuJwtUtil {
 
-    // TOKEN的有效期七天（S）
-    private static final int TOKEN_TIME_OUT = 36000000*7;
+    // TOKEN的有效期一天（S）
+    private static final int TOKEN_TIME_OUT = 3_600;
     // 加密KEY
     private static final String TOKEN_ENCRY_KEY = "MDk4ZjZiY2Q0NjIxZDM3M2NhZGU0ZTgzMjYyN2I0ZjY";
     // 最小刷新间隔(S)
@@ -32,6 +32,25 @@ public class UserJwtUtil {
                 .addClaims(claimMaps) //cla信息
                 .compact();
     }
+
+//    // 生产ID
+//    public static String getToken(Long id,Integer isAdmin){
+//        Map<String, Object> claimMaps = new HashMap<>();
+//        claimMaps.put("id",id);
+//        claimMaps.put("isAdmin",isAdmin);
+//        long currentTime = System.currentTimeMillis();
+//        return Jwts.builder()
+//                .setId(UUID.randomUUID().toString())
+//                .setIssuedAt(new Date(currentTime))  //签发时间
+//                .setSubject("system")  //说明
+//                .setIssuer("heima") //签发者信息
+//                .setAudience("app")  //接收用户
+//                .compressWith(CompressionCodecs.GZIP)  //数据压缩方式
+//                .signWith(SignatureAlgorithm.HS512, generalKey()) //加密方式
+//                .setExpiration(new Date(currentTime + TOKEN_TIME_OUT * 1000))  //过期时间戳
+//                .addClaims(claimMaps) //cla信息
+//                .compact();
+//    }
 
     /**
      * 获取token中的claims信息
@@ -109,9 +128,8 @@ public class UserJwtUtil {
     public static void main(String[] args) {
        /* Map map = new HashMap();
         map.put("id","11");*/
-        System.out.println(UserJwtUtil.getToken(1102L));
-        Jws<Claims> jws = UserJwtUtil.getJws("eyJhbGciOiJIUzUxMiIsInppcCI6IkdaSVAifQ" +
-                ".H4sIAAAAAAAAADWLQQqEMAwA_5KzhURNt_qb1KZYQSi0wi6Lf9942NsMw3zh6AVW2DYmDGl2WabkZgreCaM6VXzhFBfJMcMARTqsxIG9Z888QLui3e3Tup5Pb81013KKmVzJTGo11nf9n8v4nMUaEY73DzTabjmDAAAA.4SuqQ42IGqCgBai6qd4RaVpVxTlZIWC826QA9kLvt9d-yVUw82gU47HDaSfOzgAcloZedYNNpUcd18Ne8vvjQA");
+        System.out.println(StuJwtUtil.getToken(1102L));
+        Jws<Claims> jws = StuJwtUtil.getJws("eyJhbGciOiJIUzUxMiIsInppcCI6IkdaSVAifQ.H4sIAAAAAAAAADWLQQqEMAwA_5KzhURNt_qb1KZYQSi0wi6Lf9942NsMw3zh6AVW2DYmDGl2WabkZgreCaM6VXzhFBfJMcMARTqsxIG9Z888QLui3e3Tup5Pb81013KKmVzJTGo11nf9n8v4nMUaEY73DzTabjmDAAAA.4SuqQ42IGqCgBai6qd4RaVpVxTlZIWC826QA9kLvt9d-yVUw82gU47HDaSfOzgAcloZedYNNpUcd18Ne8vvjQA");
         Claims claims = jws.getBody();
         System.out.println(claims.get("id"));
 

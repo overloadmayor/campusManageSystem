@@ -2,8 +2,8 @@ package com.campus.usergateway.filter;
 
 import com.alibaba.cloud.commons.lang.StringUtils;
 
-import com.campus.usergateway.util.UserJwtUtil;
 
+import com.campus.usergateway.util.StuJwtUtil;
 import io.jsonwebtoken.Claims;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -36,8 +36,8 @@ public class AuthorizeFilter implements Ordered, GlobalFilter {
         }
 
         try {
-            Claims claimsBody= UserJwtUtil.getClaimsBody(token);
-            int result=UserJwtUtil.verifyToken(claimsBody);
+            Claims claimsBody= StuJwtUtil.getClaimsBody(token);
+            int result=StuJwtUtil.verifyToken(claimsBody);
             if(result==1||result==2){
                 response.setStatusCode(HttpStatus.UNAUTHORIZED);
                 return response.setComplete();
