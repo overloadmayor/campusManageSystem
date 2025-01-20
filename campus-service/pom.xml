@@ -14,6 +14,7 @@
         <module>admin-service</module>
         <module>majorAndDept-service</module>
         <module>teacher-service</module>
+        <module>course-service</module>
     </modules>
 
     <artifactId>campus-service</artifactId>
@@ -25,6 +26,7 @@
     </properties>
 
     <dependencies>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>

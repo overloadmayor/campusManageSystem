@@ -68,6 +68,10 @@
         <com.alibaba.cloud>2.2.5.RELEASE</com.alibaba.cloud>
         <xxl.job.version>2.2.0-SNAPSHOT</xxl.job.version>
         <hutool.version>5.8.11</hutool.version>
+        <amqp.version>2.7.12</amqp.version>
+        <websocket.version>2.7.3</websocket.version>
+        <javax.websocket.version>1.1</javax.websocket.version>
+        <glassfish.version>1.13.1</glassfish.version>
     </properties>
 
     <dependencies>
@@ -115,6 +119,26 @@
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
             <!-- Spring boot 特殊处理包 -->
+            <dependency>
+                <groupId>org.glassfish.tyrus.bundles</groupId>
+                <artifactId>tyrus-standalone-client</artifactId>
+                <version>${glassfish.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.websocket</groupId>
+                <artifactId>javax.websocket-api</artifactId>
+                <version>${javax.websocket.version}</version> <!-- 请根据需要选择版本 -->
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-websocket</artifactId>
+                <version>${websocket.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-amqp</artifactId>
+                <version>${amqp.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.reflections</groupId>
                 <artifactId>reflections</artifactId>

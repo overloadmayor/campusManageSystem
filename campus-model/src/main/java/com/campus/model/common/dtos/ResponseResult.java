@@ -42,6 +42,7 @@ public class ResponseResult<T> implements Serializable {
         this.errorMessage = msg;
     }
 
+
     public static ResponseResult errorResult(int code, String msg) {
         ResponseResult result = new ResponseResult();
         return result.error(code, msg);

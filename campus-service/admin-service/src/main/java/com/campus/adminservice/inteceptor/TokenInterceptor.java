@@ -2,7 +2,7 @@ package com.campus.adminservice.inteceptor;
 
 
 import com.campus.model.admin.pojos.Teacher;
-import com.campus.utils.thread.AdminThreadLocalUtil;
+import com.campus.utils.thread.UserThreadLocalUtil;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,7 +12,7 @@ public class TokenInterceptor implements HandlerInterceptor {
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-        AdminThreadLocalUtil.clear();
+        UserThreadLocalUtil.clear();
     }
 
     @Override
@@ -20,9 +20,7 @@ public class TokenInterceptor implements HandlerInterceptor {
         String userId=request.getHeader("userId");
 
         if(userId!=null){
-            Teacher teacher=new Teacher();
-            teacher.setId(Integer.valueOf(userId).longValue());
-            AdminThreadLocalUtil.setUser(teacher);
+            UserThreadLocalUtil.setUser(Integer.valueOf(userId).longValue());
         }
         return true;
     }
