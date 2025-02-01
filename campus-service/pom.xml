@@ -15,6 +15,7 @@
         <module>majorAndDept-service</module>
         <module>teacher-service</module>
         <module>course-service</module>
+        <module>selectLesson-service</module>
     </modules>
 
     <artifactId>campus-service</artifactId>
@@ -61,6 +62,7 @@
             <groupId>com.campus</groupId>
             <artifactId>campus-openfeign-api</artifactId>
         </dependency>
+
     </dependencies>
 
 </project>

@@ -1,0 +1,18 @@
+server:
+  port: 51805
+spring:
+  application:
+    name: campus-course-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 110.41.41.85:8848
+      config:
+        server-addr: 110.41.41.85:8848
+        file-extension: yml
+        shared-configs:
+          - data-id: shared-jdbc.yaml
+          - data-id: shared-log.yaml
+          - data-id: shared-redis.yaml
+          - data-id: shared-rabbitmq.yaml
+

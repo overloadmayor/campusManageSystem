@@ -1,0 +1,12 @@
+server:
+  port: 6003
+spring:
+  application:
+    name: campus-teacher-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 110.41.41.85:8848
+      config:
+        server-addr: 110.41.41.85:8848
+        file-extension: yml

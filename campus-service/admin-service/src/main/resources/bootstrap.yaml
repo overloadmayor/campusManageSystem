@@ -1,0 +1,15 @@
+server:
+  port: 51802
+spring:
+  application:
+    name: campus-admin-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 110.41.41.85:8848
+      config:
+        server-addr: 110.41.41.85:8848
+        file-extension: yml
+        shared-configs:
+          - data-id: shared-jdbc.yaml
+          - data-id: shared-log.yaml

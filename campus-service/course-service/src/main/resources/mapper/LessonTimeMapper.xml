@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.campus.courseservice.mapper.LessonTimeMapper">
+<!--    <select id="calAvailableTime" resultType="com.campus.model.course.pojos.LessonTimePart">-->
+<!--        select distinct (begin_time,end_time,day_of_week) from lesson_time-->
+<!--        <where>-->
+<!--            <if test="status == 1">-->
+<!--                status != 2-->
+<!--            </if>-->
+<!--            <if test="status == 2">-->
+<!--                status != 1-->
+<!--            </if>-->
+<!--        </where>-->
+<!--    </select>-->
+</mapper>

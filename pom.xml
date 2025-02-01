@@ -72,6 +72,7 @@
         <websocket.version>2.7.3</websocket.version>
         <javax.websocket.version>1.1</javax.websocket.version>
         <glassfish.version>1.13.1</glassfish.version>
+        <feign-okhttp.version>11.8</feign-okhttp.version>
     </properties>
 
     <dependencies>
@@ -242,6 +243,11 @@
                 <version>${spring.cloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.github.openfeign</groupId>
+                <artifactId>feign-okhttp</artifactId>
+                <version>${feign-okhttp.version}</version>
             </dependency>
             <!--spring cloud alibaba-->
             <dependency>
