@@ -73,6 +73,7 @@
         <javax.websocket.version>1.1</javax.websocket.version>
         <glassfish.version>1.13.1</glassfish.version>
         <feign-okhttp.version>11.8</feign-okhttp.version>
+        <openfeign.version>2.2.7</openfeign.version>
     </properties>
 
     <dependencies>
@@ -249,6 +250,16 @@
                 <artifactId>feign-okhttp</artifactId>
                 <version>${feign-okhttp.version}</version>
             </dependency>
+<!--            <dependency>-->
+<!--                <groupId>org.springframework.cloud</groupId>-->
+<!--                <artifactId>spring-cloud-starter-openfeign</artifactId>-->
+<!--                <version>${openfeign.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>org.springframework.cloud</groupId>-->
+<!--                <artifactId>spring-cloud-starter-loadbalancer</artifactId>-->
+<!--                <version>${openfeign.version}</version>-->
+<!--            </dependency>-->
             <!--spring cloud alibaba-->
             <dependency>
                 <groupId>com.alibaba.cloud</groupId>

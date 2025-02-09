@@ -15,7 +15,7 @@
         <module>majorAndDept-service</module>
         <module>teacher-service</module>
         <module>course-service</module>
-        <module>selectLesson-service</module>
+
     </modules>
 
     <artifactId>campus-service</artifactId>

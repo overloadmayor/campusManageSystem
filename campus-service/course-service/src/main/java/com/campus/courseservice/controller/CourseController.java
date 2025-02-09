@@ -3,6 +3,7 @@ package com.campus.courseservice.controller;
 import com.campus.courseservice.service.ICourseService;
 import com.campus.model.common.dtos.ResponseResult;
 import com.campus.model.course.dtos.CourseApplyDto;
+import com.campus.model.course.dtos.CourseListTreeDto;
 import com.campus.model.course.pojos.Course;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -41,5 +42,15 @@ public class CourseController {
             return courseService.listAll(new Course());
         }
         return courseService.getCourseByMajors(majors);
+    }
+
+    @GetMapping("treeList")
+    public ResponseResult getCourseTreeList(CourseListTreeDto course){
+        return courseService.treeList(course);
+    }
+
+    @GetMapping("name/{ids}")
+    public ResponseResult getCourseName(@PathVariable("ids") List<Long> ids){
+        return courseService.getCourseInfo(ids);
     }
 }

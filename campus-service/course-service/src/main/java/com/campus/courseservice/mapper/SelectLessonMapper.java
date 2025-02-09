@@ -1,7 +1,11 @@
-package com.campus.selectlessonservice.mapper;
+package com.campus.courseservice.mapper;
 
 import com.campus.model.selectLesson.pojos.SelectLesson;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
+
+import java.time.LocalDate;
+import java.util.List;
 
 /**
  * <p>
@@ -11,6 +15,10 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author author
  * @since 2025-02-01
  */
+@Mapper
 public interface SelectLessonMapper extends BaseMapper<SelectLesson> {
 
+    List<Long> getByStuId(Long user, LocalDate term);
+
+    List<Long> getSelected(Long user,LocalDate term);
 }

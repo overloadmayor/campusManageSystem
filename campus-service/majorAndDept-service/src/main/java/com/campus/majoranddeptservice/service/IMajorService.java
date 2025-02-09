@@ -20,4 +20,6 @@ public interface IMajorService extends IService<Major> {
     ResponseResult add(Major major);
 
     ResponseResult listDeptMajor();
+
+
 }

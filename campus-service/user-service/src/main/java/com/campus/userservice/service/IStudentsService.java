@@ -24,4 +24,6 @@ public interface IStudentsService extends IService<Students> {
     ResponseResult add(Students students);
 
     ResponseResult listAll(StudentPageDto studentPageDto);
+
+    ResponseResult getInfo();
 }

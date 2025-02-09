@@ -29,6 +29,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
@@ -46,6 +47,7 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
     private StringRedisTemplate stringRedisTemplate;
     @Autowired
     private ICourseClient courseClient;
+
 
     @Override
     public ResponseResult addTeacher(Teacher teacher) {
@@ -139,6 +141,25 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
                 CourseConstants.ADD_LESSON_ROUTINGKEY,
                 msg);
         return ResponseResult.okResult(AppHttpCodeEnum.SUCCESS);
+    }
+
+    @Override
+    public ResponseResult getTeacherName(Long id) {
+        String teachername=null;
+        String namejson = stringRedisTemplate.opsForValue().get(TeacherConstants.TEACHER_KEY + id);
+        if(namejson==null){
+            Teacher teacher = getById(id);
+            if(teacher==null){
+                return ResponseResult.errorResult(AppHttpCodeEnum.DATA_NOT_EXIST);
+            }
+            teachername=teacher.getName();
+            stringRedisTemplate.opsForValue().set(TeacherConstants.TEACHER_KEY+id,
+                    JSON.toJSONString(teachername),
+                    10, TimeUnit.MINUTES);
+        }else{
+            teachername=JSON.parseObject(namejson, String.class);
+        }
+        return ResponseResult.okResult(teachername);
     }
 
 

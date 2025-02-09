@@ -3,6 +3,10 @@ package com.campus.courseservice.mapper;
 import com.campus.model.course.pojos.Lesson;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * <p>
@@ -15,4 +19,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface LessonMapper extends BaseMapper<Lesson> {
 
+    Set<Long> getCourseIdsByLessonIds(@Param("ids") List<Long> ids);
+
+    List<Lesson> getSelectedByIds(@Param("ids") List<Long> ids);
 }

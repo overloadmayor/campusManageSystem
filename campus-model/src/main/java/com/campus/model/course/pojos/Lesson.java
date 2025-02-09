@@ -1,5 +1,6 @@
 package com.campus.model.course.pojos;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.time.LocalDate;
@@ -34,6 +35,9 @@ public class Lesson implements Serializable {
     private Long id;
 
     private Long courseId;
+
+    @TableField(exist = false)
+    private Boolean selectable;
 
     private Long teacherId;
 

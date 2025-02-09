@@ -27,4 +27,6 @@ public interface ITeacherService extends IService<Teacher> {
     ResponseResult askForCourses(TeacherCourseDto teacherCourseDto);
 
     ResponseResult askForLessons(TeacherLessonDto teacherlessonDto);
+
+    ResponseResult getTeacherName(Long id);
 }

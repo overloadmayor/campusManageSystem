@@ -8,6 +8,7 @@ import com.campus.majoranddeptservice.mapper.MajorMapper;
 import com.campus.majoranddeptservice.service.IMajorService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.campus.model.majorAndDept.pojos.DeptMajor;
+import com.campus.utils.thread.UserThreadLocalUtil;
 import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.extension.toolkit.Db;
 
@@ -48,4 +49,6 @@ public class MajorServiceImpl extends ServiceImpl<MajorMapper, Major> implements
         }
         return ResponseResult.okResult(deptMajorList);
     }
+
+
 }

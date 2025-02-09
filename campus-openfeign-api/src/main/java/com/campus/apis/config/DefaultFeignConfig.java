@@ -3,6 +3,7 @@ package com.campus.apis.config;
 
 import com.campus.apis.course.fallback.ICourseClientFallbackFactory;
 import feign.Logger;
+import feign.RequestInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -17,4 +18,6 @@ public class DefaultFeignConfig {
     public ICourseClientFallbackFactory iCourseClientFallbackFactory() {
         return new ICourseClientFallbackFactory();
     }
+
+
 }

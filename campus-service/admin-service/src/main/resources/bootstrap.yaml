@@ -13,3 +13,4 @@ spring:
         shared-configs:
           - data-id: shared-jdbc.yaml
           - data-id: shared-log.yaml
+          - data-id: shared-sentinel.yaml

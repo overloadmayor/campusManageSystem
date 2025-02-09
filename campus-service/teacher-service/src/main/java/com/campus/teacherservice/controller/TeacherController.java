@@ -34,4 +34,10 @@ public class TeacherController {
     public ResponseResult askForLessons(@RequestBody TeacherLessonDto teacherlessonDto){
         return teacherService.askForLessons(teacherlessonDto);
     }
+
+
+    @GetMapping("name/{id}")
+    public ResponseResult getTeacher(@PathVariable Long id) {
+        return teacherService.getTeacherName(id);
+    }
 }

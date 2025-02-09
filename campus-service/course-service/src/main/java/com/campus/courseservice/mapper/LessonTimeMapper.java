@@ -4,6 +4,7 @@ import com.campus.model.course.pojos.LessonTime;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.campus.model.course.pojos.LessonTimePart;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,6 +18,8 @@ import java.util.List;
  */
 @Mapper
 public interface LessonTimeMapper extends BaseMapper<LessonTime> {
+    List<LessonTime> getTimesByIds(@Param("ids") List<Long> ids);
+
 
 //    List<LessonTimePart> calAvailableTime(Integer status);
 }

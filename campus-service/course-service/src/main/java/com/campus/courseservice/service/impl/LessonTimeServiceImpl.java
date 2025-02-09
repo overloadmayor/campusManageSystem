@@ -17,9 +17,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -56,6 +58,35 @@ public class LessonTimeServiceImpl extends ServiceImpl<LessonTimeMapper, LessonT
         lessonTimeVo.setNotRequired(notRequired);
         return ResponseResult.okResult(lessonTimeVo);
     }
+
+    @Override
+    public ResponseResult getLessonTimes(List<Long> rest) {
+        List<LessonTime> result=new ArrayList<>();
+        if(!rest.isEmpty()){
+//            List<Lesson> lessons = Db.lambdaQuery(Lesson.class).in(Lesson::getId, rest).list();
+            List<LessonTime> lessonTimes =lessonTimeMapper.getTimesByIds(rest);
+//                    lambdaQuery().in(LessonTime::getLessonId, rest).orderByAsc(LessonTime::getLessonId).list();
+            List<LessonTime> temp=new ArrayList<>();
+            Long last=null;
+            for (LessonTime lessonTime : lessonTimes) {
+//                lessonTime.setLessonName()
+                result.add(lessonTime);
+                if(!lessonTime.getLessonId().equals(last)&&last!=null){
+                    stringRedisTemplate.opsForValue().set(CourseConstants.LESSON_TIME+last,
+                            JSON.toJSONString(temp),10, TimeUnit.MINUTES);
+                    temp.clear();
+                }
+                temp.add(lessonTime);
+                last=lessonTime.getLessonId();
+            }
+            if(last!=null){
+                stringRedisTemplate.opsForValue().set(CourseConstants.LESSON_TIME+last,
+                        JSON.toJSONString(temp),10, TimeUnit.MINUTES);
+            }
+        }
+        return ResponseResult.okResult(result);
+    }
+
 
     private void selectLessonTimePart(MajorCourse majorCourse, Set<LessonTimePart> ban
             , Set<LessonTimePart> notRequired,Integer status) {

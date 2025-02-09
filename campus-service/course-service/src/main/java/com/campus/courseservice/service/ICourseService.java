@@ -2,6 +2,7 @@ package com.campus.courseservice.service;
 
 import com.campus.model.common.dtos.ResponseResult;
 import com.campus.model.course.dtos.CourseApplyDto;
+import com.campus.model.course.dtos.CourseListTreeDto;
 import com.campus.model.course.pojos.Course;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -26,4 +27,8 @@ public interface ICourseService extends IService<Course> {
     ResponseResult applyCourse(CourseApplyDto courseApplyDto);
 
     ResponseResult getCourseByMajors(List<Long> majors);
+
+    ResponseResult treeList(CourseListTreeDto course);
+
+    ResponseResult getCourseInfo(List<Long> ids);
 }

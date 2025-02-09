@@ -15,4 +15,11 @@ spring:
           - data-id: shared-log.yaml
           - data-id: shared-redis.yaml
           - data-id: shared-rabbitmq.yaml
-
+          - data-id: shared-mybatis.yaml
+          - data-id: shared-sentinel.yaml
+#feign:
+#  okhttp:
+#    enabled: true
+#  httpclient: false
+#  sentinel:
+#    enabled: true

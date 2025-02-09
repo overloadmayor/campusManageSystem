@@ -2,4 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.campus.courseservice.mapper.LessonMapper">
 
+    <select id="getCourseIdsByLessonIds" resultType="java.lang.Long">
+        select course_id from lesson where id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+    <select id="getSelectedByIds" resultType="com.campus.model.course.pojos.Lesson">
+        select id,selected from campus.lesson where id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
 </mapper>

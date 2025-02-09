@@ -1,5 +1,89 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.campus.courseservice.mapper.CourseMapper">
 
+
+    <resultMap id="CourseListTreeVoResultMap" type="com.campus.model.course.vo.CourseListTreeVo">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="credit" column="credit"/>
+        <collection property="preCourseIds" ofType="java.lang.Long">
+            <result column ="pre_course_ids"/>
+        </collection>
+
+        <collection property="majorCourses"
+                    ofType="com.campus.model.course.pojos.MajorCourse">
+            <result property="courseId" column="course_ids"/>
+            <result property="majorId" column="major_ids"/>
+            <result property="required" column="required"/>
+        </collection>
+        <collection property="lessonList"
+                    ofType="com.campus.model.course.pojos.LessonAndTime">
+            <id property="id" column="lesson_id"/> <!-- lesson 表的主键 -->
+            <result property="courseId" column="course_id"/>
+            <result property="teacherId" column="teacher_id"/>
+            <result property="startWeek" column="start_week"/>
+            <result property="endWeek" column="end_week"/>
+            <result property="selected" column="selected"/>
+            <result property="capacity" column="capacity"/>
+            <result property="term" column="term"/>
+            <result property="targetGrade" column="target_grade"/>
+            <!-- 映射LessonTime列表 -->
+            <collection property="lessonTimes" ofType="com.campus.model.course.pojos.LessonTime">
+                <id property="id" column="lesson_time_id"/>
+                <result property="lessonId" column="lesson_id"/>
+                <result property="beginTime" column="begin_time"/>
+                <result property="dayOfWeek" column="day_of_week"/>
+                <result property="endTime" column="end_time"/>
+                <result property="status" column="status"/>
+            </collection>
+        </collection>
+
+    </resultMap>
+    <select id="treeList" resultMap="CourseListTreeVoResultMap">
+        select c.id         as id,
+               c.name as name,
+               c.credit/10.0 as credit,
+        l.id         as lesson_id,
+        pc.pre_id       as pre_course_ids,
+        mc.course_id as course_ids,
+        mc.major_id  as major_ids,
+        mc.required,
+        l.course_id,
+        teacher_id,
+        start_week,
+        end_week,
+        selected,
+        capacity,
+        term,
+        target_grade,
+        lt.lesson_id,
+        begin_time,
+        day_of_week,
+        end_time,
+        status,
+        lt.id        as lesson_time_id
+        from campus.course c
+        left join campus.lesson l on  c.id = l.course_id and term = #{term}
+        left join campus.lesson_time lt on l.id = lt.lesson_id
+        left join campus.major_course mc on c.id = mc.course_id
+        left join campus.pre_course pc on c.id = pc.after_id
+        where c.id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+
+    </select>
+    <select id="listAll" resultType="com.campus.model.course.pojos.Course">
+        select id, name, credit
+        from campus.course
+        where exists(select * from campus.lesson where course_id=course.id and term=#{term});
+    </select>
+    <select id="selectCourse" resultType="com.campus.model.course.pojos.Course">
+        select id, name, credit/10.0 as credit from campus.course where id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
 </mapper>

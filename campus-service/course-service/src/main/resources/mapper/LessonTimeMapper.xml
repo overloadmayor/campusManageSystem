@@ -12,4 +12,23 @@
 <!--            </if>-->
 <!--        </where>-->
 <!--    </select>-->
+
+    <select id="getTimesByIds" resultType="com.campus.model.course.pojos.LessonTime">
+        select lesson_id,
+               begin_time,
+               day_of_week,
+               end_time,
+               status,
+               lesson_time.id as id,
+               name           as lessonName
+        from campus.lesson_time
+                 join campus.lesson l on l.id = lesson_time.lesson_id
+                 join campus.course c on c.id = l.course_id
+        where lesson_id in
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+        order by lesson_id
+    </select>
+
 </mapper>

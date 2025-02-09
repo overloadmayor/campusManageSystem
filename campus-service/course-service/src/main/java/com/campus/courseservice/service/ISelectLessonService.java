@@ -1,7 +1,10 @@
-package com.campus.selectlessonservice.service;
+package com.campus.courseservice.service;
 
+import com.campus.model.common.dtos.ResponseResult;
+import com.campus.model.selectLesson.dtos.SetTimeDto;
 import com.campus.model.selectLesson.pojos.SelectLesson;
 import com.baomidou.mybatisplus.extension.service.IService;
+
 
 /**
  * <p>
@@ -11,6 +14,14 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author author
  * @since 2025-02-01
  */
+
 public interface ISelectLessonService extends IService<SelectLesson> {
+
+    ResponseResult setTime(SetTimeDto setTimeDto);
+
+    ResponseResult getTime();
+
+    ResponseResult listByStuId();
+
 
 }

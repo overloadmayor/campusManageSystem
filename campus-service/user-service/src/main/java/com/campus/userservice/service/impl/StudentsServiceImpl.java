@@ -1,5 +1,6 @@
 package com.campus.userservice.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.campus.common.constants.UserConstants;
 import com.campus.model.common.dtos.ResponseResult;
@@ -12,9 +13,14 @@ import com.campus.userservice.service.IStudentsService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.campus.utils.common.StuJwtUtil;
 import com.campus.utils.common.RSAUtil;
+import com.campus.utils.thread.UserThreadLocalUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import com.campus.model.user.pojos.Students;
 import org.springframework.util.DigestUtils;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
@@ -28,6 +34,10 @@ import org.springframework.util.DigestUtils;
 public class StudentsServiceImpl extends ServiceImpl<StudentsMapper, Students> implements IStudentsService {
 //    @Autowired
 //    private IdeptMajorClient deptMajorClient;
+    @Autowired
+    private StringRedisTemplate redisTemplate;
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
 
     @Override
     public ResponseResult login(StudentLoginDto studentLoginDto) {
@@ -92,5 +102,24 @@ public class StudentsServiceImpl extends ServiceImpl<StudentsMapper, Students> i
         res.getRecords().stream().forEach(stu->stu.setPassword(null));
 
         return ResponseResult.okResult(res);
+    }
+
+    @Override
+    public ResponseResult getInfo() {
+        Long user = UserThreadLocalUtil.getUser();
+        Students student=null;
+        String userJson = stringRedisTemplate.opsForValue().get(UserConstants.USER_INFO + user);
+        if(userJson!=null){
+            student= JSON.parseObject(userJson, Students.class);
+        }
+        else{
+            student = getById(user);
+            if(student==null){
+                return ResponseResult.errorResult(AppHttpCodeEnum.DATA_NOT_EXIST);
+            }
+            stringRedisTemplate.opsForValue().set(UserConstants.USER_INFO + user,
+                    JSON.toJSONString(student),10, TimeUnit.MINUTES);
+        }
+        return ResponseResult.okResult(student);
     }
 }
