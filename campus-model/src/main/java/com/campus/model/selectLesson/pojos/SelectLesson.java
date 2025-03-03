@@ -1,9 +1,13 @@
 package com.campus.model.selectLesson.pojos;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+import java.util.List;
+
+import com.campus.model.course.pojos.LessonAndTime;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -34,5 +38,16 @@ public class SelectLesson implements Serializable {
 
     private Long studentId;
 
+    @TableField(exist = false)
+    private Integer capacity;
 
+    @TableField(exist = false)
+    private List<String> lessonTimes;
+
+    //1 选课 0 退课
+    @TableField(exist = false)
+    private Integer option;
+
+    @TableField(exist = false)
+    private String uuid;
 }

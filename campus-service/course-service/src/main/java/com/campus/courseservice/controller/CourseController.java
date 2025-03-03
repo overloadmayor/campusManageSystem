@@ -49,6 +49,11 @@ public class CourseController {
         return courseService.treeList(course);
     }
 
+    @GetMapping("treeListInSchema")
+    public ResponseResult getCourseTreeListInSchema(CourseListTreeDto course){
+        return courseService.treeListInSchema(course);
+    }
+
     @GetMapping("name/{ids}")
     public ResponseResult getCourseName(@PathVariable("ids") List<Long> ids){
         return courseService.getCourseInfo(ids);

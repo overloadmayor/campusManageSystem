@@ -30,6 +30,8 @@ public class LessonTime implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @TableField(exist = false)
+    private String lessonName;
 
     private Long lessonId;
 

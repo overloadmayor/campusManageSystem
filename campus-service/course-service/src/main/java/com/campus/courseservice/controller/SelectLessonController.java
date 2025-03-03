@@ -27,5 +27,13 @@ public class SelectLessonController {
         return selectLessonService.listByStuId();
     }
 
+    @PutMapping("{id}")
+    public ResponseResult selectLesson(@PathVariable Long id) {
+        return selectLessonService.selectLesson(id);
+    }
 
+    @PutMapping("back/{id}")
+    public ResponseResult backLesson(@PathVariable Long id) {
+        return selectLessonService.backLesson(id);
+    }
 }

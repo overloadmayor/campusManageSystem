@@ -1,17 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.campus.courseservice.mapper.SelectLessonMapper">
+    <resultMap id="CourseStuResultMap"
+               type="com.campus.model.selectLesson.pojos.SelectCourseAndStu">
+        <result property="userId" column="userId"/>
+        <result property="courseId" column="courseId"/>
+    </resultMap>
+
 
     <select id="getByStuId" resultType="java.lang.Long">
         select lesson_id
         from select_lesson sl
                  join campus.lesson l on sl.lesson_id = l.id
-        where student_id = #{user} and term = #{term};
+        where student_id = #{user}
+          and term = #{term};
     </select>
     <select id="getSelected" resultType="java.lang.Long">
         select lesson_id
         from select_lesson sl
                  join campus.lesson l on sl.lesson_id = l.id
-        where student_id = #{user} and term &lt; #{term};
+        where student_id = #{user}
+          and term &lt; #{term};
+    </select>
+    <select id="SelectedCourseAndStu" resultMap="CourseStuResultMap">
+        select select_lesson.student_id as userId,
+               l.course_id as courseId
+        from campus.select_lesson
+                 join campus.lesson l on l.id = select_lesson.lesson_id
+        where term=#{term}
     </select>
 </mapper>

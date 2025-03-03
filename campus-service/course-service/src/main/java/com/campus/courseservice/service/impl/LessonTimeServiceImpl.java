@@ -13,6 +13,7 @@ import com.campus.model.course.pojos.LessonTimePart;
 import com.campus.model.course.pojos.MajorCourse;
 import com.campus.model.course.vo.LessonTimeVo;
 import com.campus.model.teacher.dtos.TeacherLessonDto;
+import com.campus.utils.common.RedisExpireUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -73,7 +74,7 @@ public class LessonTimeServiceImpl extends ServiceImpl<LessonTimeMapper, LessonT
                 result.add(lessonTime);
                 if(!lessonTime.getLessonId().equals(last)&&last!=null){
                     stringRedisTemplate.opsForValue().set(CourseConstants.LESSON_TIME+last,
-                            JSON.toJSONString(temp),10, TimeUnit.MINUTES);
+                            JSON.toJSONString(temp), RedisExpireUtil.RandomTime(), TimeUnit.MINUTES);
                     temp.clear();
                 }
                 temp.add(lessonTime);
@@ -81,7 +82,7 @@ public class LessonTimeServiceImpl extends ServiceImpl<LessonTimeMapper, LessonT
             }
             if(last!=null){
                 stringRedisTemplate.opsForValue().set(CourseConstants.LESSON_TIME+last,
-                        JSON.toJSONString(temp),10, TimeUnit.MINUTES);
+                        JSON.toJSONString(temp),RedisExpireUtil.RandomTime(), TimeUnit.MINUTES);
             }
         }
         return ResponseResult.okResult(result);

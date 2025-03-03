@@ -14,5 +14,8 @@
             #{id}
         </foreach>
     </select>
+    <select id="getCourseIdByLessonId" resultType="java.lang.Long">
+        select course_id from campus.lesson where id=#{id} and term=#{term};
+    </select>
 
 </mapper>

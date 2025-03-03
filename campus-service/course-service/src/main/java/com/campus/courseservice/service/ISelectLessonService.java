@@ -23,5 +23,13 @@ public interface ISelectLessonService extends IService<SelectLesson> {
 
     ResponseResult listByStuId();
 
+    ResponseResult selectLesson(Long id);
 
+    void selectLessonAndSave(SelectLesson selectLesson);
+
+    void handleSelectLesson(SelectLesson selectLesson);
+
+    void backLessonAndSave(SelectLesson selectLesson);
+
+    ResponseResult backLesson(Long id);
 }

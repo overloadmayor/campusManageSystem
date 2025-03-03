@@ -93,7 +93,9 @@ public class LessonServiceImpl extends ServiceImpl<LessonMapper, Lesson> impleme
             lessonTime.setLessonId(lesson.getId());
             lessonTimeService.save(lessonTime);
         }
+        stringRedisTemplate.opsForValue().set(CourseConstants.LESSON_SELECTED+lesson.getId(), String.valueOf(0));
         stringRedisTemplate.delete(CourseConstants.COURSE_DETAIL + lesson.getCourseId());
+        stringRedisTemplate.delete(CourseConstants.COURSE_ALL_IN_THIS_TERM);
         return ResponseResult.okResult(lesson.getId());
     }
 }

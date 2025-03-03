@@ -11,6 +11,7 @@ import com.campus.model.user.vos.StudentLoginVo;
 import com.campus.userservice.mapper.StudentsMapper;
 import com.campus.userservice.service.IStudentsService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.campus.utils.common.RedisExpireUtil;
 import com.campus.utils.common.StuJwtUtil;
 import com.campus.utils.common.RSAUtil;
 import com.campus.utils.thread.UserThreadLocalUtil;
@@ -117,8 +118,9 @@ public class StudentsServiceImpl extends ServiceImpl<StudentsMapper, Students> i
             if(student==null){
                 return ResponseResult.errorResult(AppHttpCodeEnum.DATA_NOT_EXIST);
             }
+            student.setPassword(null);
             stringRedisTemplate.opsForValue().set(UserConstants.USER_INFO + user,
-                    JSON.toJSONString(student),10, TimeUnit.MINUTES);
+                    JSON.toJSONString(student), RedisExpireUtil.RandomTime(), TimeUnit.MINUTES);
         }
         return ResponseResult.okResult(student);
     }

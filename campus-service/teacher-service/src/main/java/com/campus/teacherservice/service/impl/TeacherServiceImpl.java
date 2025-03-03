@@ -18,6 +18,7 @@ import com.campus.model.common.enums.AppHttpCodeEnum;
 import com.campus.teacherservice.mapper.TeacherMapper;
 import com.campus.teacherservice.service.ITeacherService;
 import com.campus.utils.common.RSAUtil;
+import com.campus.utils.common.RedisExpireUtil;
 import com.campus.utils.common.TeacherJwtUtil;
 import com.campus.utils.thread.UserThreadLocalUtil;
 
@@ -155,7 +156,7 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
             teachername=teacher.getName();
             stringRedisTemplate.opsForValue().set(TeacherConstants.TEACHER_KEY+id,
                     JSON.toJSONString(teachername),
-                    10, TimeUnit.MINUTES);
+                    RedisExpireUtil.RandomTime(), TimeUnit.MINUTES);
         }else{
             teachername=JSON.parseObject(namejson, String.class);
         }

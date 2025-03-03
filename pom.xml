@@ -74,6 +74,7 @@
         <glassfish.version>1.13.1</glassfish.version>
         <feign-okhttp.version>11.8</feign-okhttp.version>
         <openfeign.version>2.2.7</openfeign.version>
+        <redisson.version>3.13.6</redisson.version>
     </properties>
 
     <dependencies>
@@ -237,7 +238,7 @@
                 <artifactId>jackson-dataformat-xml</artifactId>
                 <version>${fastjson.dataformat.version}</version>
             </dependency>
-            <!-- spring colud -->
+            <!-- spring cloud -->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
@@ -338,6 +339,7 @@
                 <artifactId>kafka-clients</artifactId>
                 <version>${kafka.client.version}</version>
             </dependency>
+<!--            knife4j-->
             <dependency>
                 <groupId>com.github.xiaoymin</groupId>
                 <artifactId>knife4j-spring-boot-starter</artifactId>
@@ -353,6 +355,7 @@
                 <artifactId>springfox-swagger-ui</artifactId>
                 <version>${swagger.version}</version>
             </dependency>
+<!--            mybatis-plus-->
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
@@ -362,6 +365,12 @@
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
+            </dependency>
+            <!--        redis-->
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson</artifactId>
+                <version>${redisson.version}</version>
             </dependency>
         </dependencies>
 

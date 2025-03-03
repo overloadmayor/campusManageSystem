@@ -86,4 +86,16 @@
             #{id}
         </foreach>
     </select>
+    <select id="listAllByMajors" resultType="com.campus.model.course.pojos.Course">
+        select id, name, credit
+        from campus.course
+        where exists(select *
+                     from campus.major_course
+                     where course_id = course.id
+                       and major_id = #{major})
+          and exists(select *
+                     from campus.lesson
+                     where course_id = course.id
+                       and term = #{term});
+    </select>
 </mapper>

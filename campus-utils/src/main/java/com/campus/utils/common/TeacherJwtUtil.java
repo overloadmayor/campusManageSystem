@@ -9,7 +9,7 @@ import java.util.*;
 public class TeacherJwtUtil {
 
     // TOKEN的有效期一天（S）
-    private static final int TOKEN_TIME_OUT = 3_600;
+    private static final int TOKEN_TIME_OUT = 3_600*24*7;
     // 加密KEY
     private static final String TOKEN_ENCRY_KEY = "MKk6ZjZiY2Q0xjIxZDM3M2NhZGU0ZTgzMjYyN2I0ZxY";
     // 最小刷新间隔(S)

@@ -31,4 +31,10 @@ public interface ICourseService extends IService<Course> {
     ResponseResult treeList(CourseListTreeDto course);
 
     ResponseResult getCourseInfo(List<Long> ids);
+
+    ResponseResult treeListInSchema(CourseListTreeDto course);
+
+    ResponseResult check(Long lessonId);
+
+    ResponseResult backLessonCheck(Long id);
 }

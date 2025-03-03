@@ -25,4 +25,6 @@ public interface CourseMapper extends BaseMapper<Course> {
     List<Course> listAll(@Param("term")LocalDate term);
 
     List<Course> selectCourse(@Param("ids") List<Long> ids);
+
+    List<Course> listAllByMajors(@Param("term") LocalDate term,@Param("major") Long major);
 }
