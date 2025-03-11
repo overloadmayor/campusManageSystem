@@ -6,7 +6,7 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 110.41.41.85:8848
+        server-addr: 1.95.221.110:8848
       config:
-        server-addr: 110.41.41.85:8848
+        server-addr: 1.95.221.110:8848
         file-extension: yml

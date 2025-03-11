@@ -1,0 +1,51 @@
+name: springboot打包
+
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 迁出代码
+        uses: actions/checkout@v4
+      - name: 设置jdk8
+        uses: actions/setup-java@v4
+        with:
+          java-version: '8'
+          distribution: 'semeru'
+          cache: maven
+      - name: 下载Maven依赖并打包构建
+        run: mvn -B package --file pom.xml
+
+      - name: 上传jar包到服务器
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.5
+        with:
+          username: 'root'
+          server: '1.95.219.220'
+          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
+          local_path: './target/*{service,gateway}*.jar'
+          remote_path: '/root/projectdirs/temp'
+          delete_remote_files: true
+          sftpArgs: '-o ConnectTimeout=5'
+
+      - name: Deploy to Server
+        uses: appleboy/ssh-action@v0.1.1
+        with:
+          host: 1.95.219.220
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          username: root
+          script: |
+            echo "开始执行脚本"
+            pkill -f 'java -jar'
+            echo "迁移旧文件"
+            cd /root/projectdirs
+            mkdir new
+            mkdir old
+            cp /root/projectdirs/new/* /root/projectdirs/old/
+            cp /root/projectdirs/temp/* /root/projectdirs/new/
+            cp /root/projectdirs/jars.sh /root/projectdirs/new/
+            bash /root/projectdirs/new/jars.sh start
+            
+            
