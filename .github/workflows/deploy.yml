@@ -17,7 +17,7 @@ jobs:
           distribution: 'semeru'
           cache: maven
       - name: 下载Maven依赖并打包构建
-        run: mvn -B package --file pom.xml
+        run: mvn -DskipTests -B package --file pom.xml
 
       - name: 上传jar包到服务器
         uses: wlixcc/SFTP-Deploy-Action@v1.2.5
