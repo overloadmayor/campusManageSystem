@@ -4,6 +4,7 @@ import com.campus.model.common.dtos.ResponseResult;
 import com.campus.model.course.pojos.LessonTime;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -16,7 +17,7 @@ import java.util.List;
  */
 public interface ILessonTimeService extends IService<LessonTime> {
 
-    ResponseResult calAvailableTime(String uid, Integer status);
+    ResponseResult calAvailableTime(String uid, Integer status, LocalDate term);
 
 
     ResponseResult getLessonTimes(List<Long> ids);
