@@ -29,7 +29,7 @@ jobs:
           server: '1.95.219.220'
           ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
           local_path: '**/*/target/*.jar'
-          remote_path: '/root/projectdirs/temp'
+          remote_path: '/root/projectdirs/codeJars'
           delete_remote_files: true
           sftpArgs: '-o ConnectTimeout=5'
 
@@ -42,14 +42,8 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             echo "开始执行脚本"
-            pkill -f 'java -jar'
-            echo "迁移旧文件"
-            cd /root/projectdirs
-            mkdir new
-            mkdir old
-            cp /root/projectdirs/new/* /root/projectdirs/old/
-            cp /root/projectdirs/temp/* /root/projectdirs/new/
-            cp /root/projectdirs/jars.sh /root/projectdirs/new/
-            bash /root/projectdirs/new/jars.sh start
+            cd /root/projectdirs/codeJars
+            jars.sh stop
+            jars.sh start
             
             
