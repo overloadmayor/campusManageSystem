@@ -28,17 +28,18 @@ jobs:
           username: 'root'
           server: '1.95.219.220'
           ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
-          local_path: '**/target/*.jar'
+          local_path: '**/*/target/*.jar'
           remote_path: '/root/projectdirs/temp'
           delete_remote_files: true
           sftpArgs: '-o ConnectTimeout=5'
 
       - name: Deploy to Server
-        uses: appleboy/ssh-action@v0.1.1
+        uses: appleboy/ssh-action@v1.2.2
         with:
+          username: 'root'
           host: '1.95.219.220'
+          port: 22
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          username: root
           script: |
             echo "开始执行脚本"
             pkill -f 'java -jar'
