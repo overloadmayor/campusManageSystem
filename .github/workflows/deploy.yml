@@ -19,7 +19,7 @@ jobs:
           distribution: 'semeru'
           cache: maven
       - name: 下载Maven依赖并打包构建
-        run: mvn -DskipTests -DoutputDirectory=./ -B package --file pom.xml
+        run: mvn -DskipTests  -B package --file pom.xml
       - name: TEST
         run: tree .
       - name: 上传jar包到服务器
@@ -28,7 +28,7 @@ jobs:
           username: 'root'
           server: '1.95.219.220'
           ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
-          local_path: './*{service,gateway}*.jar'
+          local_path: './*/*{service,gateway}*.jar'
           remote_path: '/root/projectdirs/temp'
           delete_remote_files: true
           sftpArgs: '-o ConnectTimeout=5'
