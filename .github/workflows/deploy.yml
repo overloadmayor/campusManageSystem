@@ -28,7 +28,7 @@ jobs:
           username: 'root'
           server: '1.95.219.220'
           ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
-          local_path: './*/*{service,gateway}*.jar'
+          local_path: './*/*.jar'
           remote_path: '/root/projectdirs/temp'
           delete_remote_files: true
           sftpArgs: '-o ConnectTimeout=5'
