@@ -8,6 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.List;
 
 @RestController
@@ -18,8 +19,9 @@ public class LessonTimeController {
 
     @GetMapping
     public ResponseResult getLessonTime(@RequestParam String uid, @RequestParam Integer status,
-                                        @RequestParam @DateTimeFormat(pattern ="yyyy-MM") LocalDate term) {
-        return lessonTimeService.calAvailableTime(uid, status, term);
+                                        @RequestParam @DateTimeFormat(pattern ="yyyy-MM") YearMonth term) {
+        LocalDate termDate=LocalDate.of(term.getYear(),term.getMonth(),1);
+        return lessonTimeService.calAvailableTime(uid, status, termDate);
     }
 
     @GetMapping("{ids}")
