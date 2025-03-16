@@ -25,4 +25,7 @@ public interface LessonMapper extends BaseMapper<Lesson> {
     List<Lesson> getSelectedByIds(@Param("ids") List<Long> ids);
 
     Long getCourseIdByLessonId(@Param("id") Long id, @Param("term")LocalDate term);
+
+    List<Lesson> getLessonByTeacherId(@Param("teacherId") Long teacherId,
+                                      @Param("term") LocalDate term);
 }

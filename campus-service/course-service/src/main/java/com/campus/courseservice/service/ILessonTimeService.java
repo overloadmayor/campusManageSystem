@@ -18,7 +18,6 @@ import java.util.List;
 public interface ILessonTimeService extends IService<LessonTime> {
 
     ResponseResult calAvailableTime(String uid, Integer status, LocalDate term);
-
-
+    
     ResponseResult getLessonTimes(List<Long> ids);
 }

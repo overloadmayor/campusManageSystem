@@ -5,6 +5,8 @@ import com.campus.model.course.dtos.LessonAddDto;
 import com.campus.model.course.pojos.Lesson;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.time.LocalDate;
+
 /**
  * <p>
  *  服务类
@@ -18,4 +20,7 @@ public interface ILessonService extends IService<Lesson> {
     ResponseResult checkAddLesson();
 
     ResponseResult addLesson(LessonAddDto lessonAddDto);
+
+    ResponseResult getLessonsByTeacher(LocalDate term);
+
 }

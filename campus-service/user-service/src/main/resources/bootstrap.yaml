@@ -15,4 +15,5 @@ spring:
           - data-id: shared-log.yaml
           - data-id: shared-sentinel.yaml
           - data-id: shared-redis.yaml
+          - data-id: shared-rabbitmq.yaml
 

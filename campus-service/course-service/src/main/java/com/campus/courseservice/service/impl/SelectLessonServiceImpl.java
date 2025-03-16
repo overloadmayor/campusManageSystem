@@ -2,6 +2,8 @@ package com.campus.courseservice.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.toolkit.Db;
 import com.campus.common.constants.CourseConstants;
 import com.campus.common.constants.SelectLessonConstants;
@@ -17,6 +19,7 @@ import com.campus.model.selectLesson.pojos.SelectLesson;
 import com.campus.courseservice.mapper.SelectLessonMapper;
 import com.campus.courseservice.service.ISelectLessonService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.campus.model.user.pojos.Students;
 import com.campus.utils.thread.UserThreadLocalUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RLock;
@@ -224,6 +227,19 @@ public class SelectLessonServiceImpl extends ServiceImpl<SelectLessonMapper, Sel
         Integer selectNumInteger = JSON.parseObject(selectNum, Integer.class);
         return ResponseResult.okResult(selectNumInteger);
 
+    }
+
+    @Override
+    public ResponseResult getStusByLessonId(Long id, Integer page, Integer pageSize) {
+        IPage<Long> iPage=new Page<>(page,pageSize);
+        iPage=selectLessonMapper.selectStuIdsByLessonId(iPage,id);
+        return ResponseResult.okResult(iPage);
+    }
+
+    @Override
+    public ResponseResult getAllStusByLessonId(Long lessonId) {
+        List<Students> students=selectLessonMapper.selectAllStusByLessonId(lessonId);
+        return ResponseResult.okResult(students);
     }
 
     @Override

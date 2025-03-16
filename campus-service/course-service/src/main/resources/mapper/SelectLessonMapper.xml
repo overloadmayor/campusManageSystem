@@ -30,4 +30,26 @@
                  join campus.lesson l on l.id = select_lesson.lesson_id
         where term=#{term}
     </select>
+    <select id="selectStuIdsByLessonId" resultType="java.lang.Long">
+        select student_id from campus.select_lesson where lesson_id=#{id}
+    </select>
+    <select id="selectAllStusByLessonId" resultType="com.campus.model.user.pojos.Students">
+        select students.id,
+               students.name,
+               sex,
+               grade,
+               dept,
+               major,
+               credit,
+               dept.name  as deptName,
+               major.name as majorName
+        from campus.students
+                 join campus.major
+                      on major.id = major
+                 join campus.dept
+                      on major.dept_id = dept.id
+        where students.id in (select student_id
+                     from campus.select_lesson
+                     where lesson_id = #{id});
+    </select>
 </mapper>

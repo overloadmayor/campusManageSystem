@@ -2,4 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.campus.userservice.mapper.StudentsMapper">
 
+    <select id="getInfosByIds" resultType="com.campus.model.user.pojos.Students">
+        select students.id,
+               students.name,
+               students.sex,
+               students.grade,
+               students.dept,
+               students.major,
+               students.credit,
+               major.name as majorName,
+               d.name as deptName
+        from campus.students
+                 left join campus.major on major = major.id
+                 join campus.dept d on d.id = major.dept_id
+        where students.id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
 </mapper>

@@ -32,4 +32,8 @@ public interface ISelectLessonService extends IService<SelectLesson> {
     void backLessonAndSave(SelectLesson selectLesson);
 
     ResponseResult backLesson(Long id);
+
+    ResponseResult getStusByLessonId(Long id, Integer page, Integer pageSize);
+
+    ResponseResult getAllStusByLessonId(Long lessonId);
 }

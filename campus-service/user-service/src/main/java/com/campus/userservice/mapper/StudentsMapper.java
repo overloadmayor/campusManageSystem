@@ -4,6 +4,9 @@ package com.campus.userservice.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.campus.model.user.pojos.Students;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -16,4 +19,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface StudentsMapper extends BaseMapper<Students> {
 
+    List<Students> getInfosByIds(@Param("ids") List<Long> ids);
 }

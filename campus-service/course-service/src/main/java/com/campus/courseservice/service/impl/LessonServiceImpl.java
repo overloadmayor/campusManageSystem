@@ -14,6 +14,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.campus.model.course.pojos.LessonTime;
 import com.campus.model.teacher.dtos.TeacherCourseDto;
 import com.campus.model.teacher.dtos.TeacherLessonDto;
+import com.campus.utils.thread.UserThreadLocalUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -22,6 +23,7 @@ import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -52,6 +54,9 @@ public class LessonServiceImpl extends ServiceImpl<LessonMapper, Lesson> impleme
         APPLY_LESSON_SCRIPT.setLocation(new ClassPathResource("applyLesson.lua"));
         APPLY_LESSON_SCRIPT.setResultType(String.class);
     }
+
+    @Autowired
+    private LessonMapper lessonMapper;
 
     @Override
     public ResponseResult checkAddLesson() {
@@ -98,4 +103,12 @@ public class LessonServiceImpl extends ServiceImpl<LessonMapper, Lesson> impleme
         stringRedisTemplate.delete(CourseConstants.COURSE_ALL_IN_THIS_TERM);
         return ResponseResult.okResult(lesson.getId());
     }
+
+    @Override
+    public ResponseResult getLessonsByTeacher(LocalDate term) {
+        Long teacherId = UserThreadLocalUtil.getUser();
+        List<Lesson> lessons = lessonMapper.getLessonByTeacherId(teacherId, term);
+        return ResponseResult.okResult(lessons);
+    }
+
 }

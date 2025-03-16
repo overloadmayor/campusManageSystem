@@ -35,7 +35,7 @@
 
         <!-- 依赖包版本管理 -->
         <spring.boot.version>2.3.9.RELEASE</spring.boot.version>
-        <commons.io.version>2.6</commons.io.version>
+        <commons.io.version>2.14.0</commons.io.version>
         <commons.codec.version>1.12</commons.codec.version>
         <lombok.version>1.18.24</lombok.version>
         <mysql.version>5.1.46</mysql.version>
@@ -75,6 +75,7 @@
         <feign-okhttp.version>11.8</feign-okhttp.version>
         <openfeign.version>2.2.7</openfeign.version>
         <redisson.version>3.13.6</redisson.version>
+        <fastexcel.version>1.1.0</fastexcel.version>
     </properties>
 
     <dependencies>
@@ -223,6 +224,13 @@
                 <artifactId>jjwt</artifactId>
                 <version>${jwt.version}</version>
             </dependency>
+<!--            fastexcel-->
+            <dependency>
+                <groupId>cn.idev.excel</groupId>
+                <artifactId>fastexcel</artifactId>
+                <version>${fastexcel.version}</version>
+            </dependency>
+
             <!-- fastjson -->
             <dependency>
                 <groupId>com.alibaba</groupId>

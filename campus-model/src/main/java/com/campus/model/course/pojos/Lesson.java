@@ -34,6 +34,9 @@ public class Lesson implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
+    @TableField(exist = false)
+    private String lessonName;
+
     private Long courseId;
 
     @TableField(exist = false)
