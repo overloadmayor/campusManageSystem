@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.me.mall.dao.customer.CustomerLinkmanDao">
+    <resultMap id="CustomerLinkManResultMap" type="com.me.mall.vo.customer.CustomerLinkManVo">
+        <!-- 主键 -->
+        <id property="id" column="id"/>
+
+        <!-- 其他字段 -->
+        <result property="companyId" column="company_id"/>
+        <result property="customerId" column="customer_id"/>
+        <result property="linkmanName" column="linkman_name"/>
+        <result property="linkmanSex" column="linkman_sex"/>
+        <result property="cellPhoneNumber" column="cell_phone_number"/>
+        <result property="landlineNumber" column="landline_number"/>
+
+        <result property="email" column="email"/>
+
+        <result property="linkmanDuty" column="linkman_duty"/>
+        <result property="hotline" column="hotline"/>
+        <result property="faxNo" column="fax_no"/>
+        <result property="linkmanQq" column="linkman_qq"/>
+        <result property="linkmanWx" column="linkman_wx"/>
+        <result property="linkmanAddress" column="linkman_address"/>
+        <result property="linkmanMark" column="linkman_mark"/>
+        <result property="isMainly" column="is_mainly"/>
+        <result property="birthDay" column="bir_day"/>
+        <result property="portraitIds" column="portrait_ids"/>
+
+        <!-- 日期类型字段 -->
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <update id="updateCustomerLinkmanInfo">
+        UPDATE customer_linkman
+        <set>
+            <if test="companyId != null">
+                company_id = #{companyId},
+            </if>
+            <if test="customerId != null">
+                customer_id = #{customerId},
+            </if>
+            <if test="linkmanName != null">
+                linkman_name = #{linkmanName},
+            </if>
+            <if test="linkmanSex != null">
+                linkman_sex = #{linkmanSex},
+            </if>
+            <if test="cellPhoneNumber != null">
+                cell_phone_number = #{cellPhoneNumber},
+            </if>
+            <if test="landlineNumber != null">
+                landline_number = #{landlineNumber},
+            </if>
+            <if test="email != null">
+                email = #{email},
+            </if>
+            <if test="linkmanDuty != null">
+                linkman_duty = #{linkmanDuty},
+            </if>
+            <if test="hotline != null">
+                hotline = #{hotline},
+            </if>
+            <if test="faxNo != null">
+                fax_no = #{faxNo},
+            </if>
+            <if test="linkmanQq != null">
+                linkman_qq = #{linkmanQq},
+            </if>
+            <if test="linkmanWx != null">
+                linkman_wx = #{linkmanWx},
+            </if>
+            <if test="linkmanAddress != null">
+                linkman_address = #{linkmanAddress},
+            </if>
+            <if test="linkmanMark != null">
+                linkman_mark = #{linkmanMark},
+            </if>
+            <if test="isMainly != null">
+                is_mainly = #{isMainly},
+            </if>
+            <if test="birthDay != null">
+                birth_day = #{birthDay},
+            </if>
+            <if test="portraitIds != null">
+                portrait_ids = #{portraitIds},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="deleteStatus != null">
+                delete_status =#{deleteStatus}
+            </if>
+
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <update id="deleteCustomerLinkmanInfo">
+        update customer_linkman
+        set delete_status=#{delete}
+        where id = #{id};
+    </update>
+
+    <select id="getCustomerLinkmanInfoByFilter"
+            resultMap="CustomerLinkManResultMap">
+        select id, company_id, customer_id, linkman_name, linkman_sex, cell_phone_number,
+        landline_number, email, linkman_duty, hotline, fax_no, linkman_qq, linkman_wx,
+        linkman_address, linkman_mark, is_mainly, birth_day, portrait_ids, update_time, create_time
+        from customer_linkman
+        <where>
+            company_id = #{companyId} and customer_id = #{customerId} and delete_status = #{delete}
+            <if test="name != null and name != ''">
+                AND linkman_name LIKE CONCAT('%', #{name}, '%')
+            </if>
+        </where>
+    </select>
+
+
+</mapper>

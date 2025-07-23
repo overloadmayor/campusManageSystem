@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.me.mall.dao.menu.MenuDao">
+
+    <select id="listMenu" resultType="com.me.mall.vo.menu.MenuVo">
+        SELECT
+            m.menu_id menuId,
+            m.menu_code menuCode,
+            m.menu_name menuName,
+            m.parent_id parentId,
+            m.menu_type menuType,
+            m.menu_url menuUrl,
+            m.icon_class iconClass,
+            m.icon_url iconUrl,
+            m.sort,
+            m.enable,
+            m.remark,
+            m.create_time createTime,
+            m.update_time updateTime
+        FROM
+            `menu` m
+        <where>
+            <if test="param.enable != null">
+                m.enable = #{param.enable}
+            </if>
+            <!-- 企业角色权限条件 -->
+            <if test="param.roleIdList != null and param.roleIdList.size > 0">
+                and m.menu_id in (
+                    select menu_id from company_role_menu_relation
+                    where role_id in
+                    <foreach collection="param.roleIdList" item="item" close=")" open="(" separator=",">
+                        #{item}
+                    </foreach>
+                )
+            </if>
+        </where>
+    </select>
+</mapper>

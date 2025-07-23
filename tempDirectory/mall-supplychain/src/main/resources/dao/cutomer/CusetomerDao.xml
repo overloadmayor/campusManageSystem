@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.me.mall.dao.customer.CustomerDao">
+    <resultMap id="CustomerListVoResultMap" type="com.me.mall.vo.customer.CustomerListVo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="company_id" property="companyId" jdbcType="BIGINT"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="province" property="province" jdbcType="INTEGER"/>
+        <result column="city" property="city" jdbcType="INTEGER"/>
+        <result column="region" property="region" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="level" property="level" jdbcType="INTEGER"/>
+        <result column="scale" property="scale" jdbcType="INTEGER"/>
+        <result column="loyalty" property="loyalty" jdbcType="INTEGER"/>
+        <result column="total_amount" property="totalAmount" jdbcType="DECIMAL"/>
+        <result column="direct_total_amount" property="directTotalAmount" jdbcType="DECIMAL"/>
+        <result column="pick_total_amount" property="pickTotalAmount" jdbcType="DECIMAL"/>
+        <result column="avg_amount" property="avgAmount" jdbcType="DECIMAL"/>
+        <result column="create_user_id" property="createUserId" jdbcType="BIGINT"/>
+        <result column="last_contact_time" property="lastContactTime" jdbcType="TIMESTAMP"/>
+        <result column="last_order_time" property="lastOrderTime" jdbcType="TIMESTAMP"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="mobile" property="mobile" jdbcType="VARCHAR"/>
+        <result column="telephone" property="telephone" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="customer_tags_ids" property="customerTagsIds" jdbcType="VARCHAR"/>
+        <result column="projects_id" property="projectsId" jdbcType="VARCHAR"/>
+    </resultMap>
+    <update id="deleteCustomer">
+        update customer
+        set enable= #{enable}
+        where id = #{id}
+    </update>
+    
+    <select id="getCustomerInfoByFilter" resultMap="CustomerListVoResultMap">
+        select id,
+        company_id,
+        code,
+        type,
+        name,
+        province,
+        city,
+        region,
+        customer_tags_ids,
+        projects_id,
+        status,
+        level,
+        scale,
+        loyalty,
+        total_amount,
+        direct_total_amount,
+        pick_total_amount,
+        avg_amount,
+        create_user_id,
+        last_contact_time,
+        last_order_time,
+        address,
+        mobile,
+        telephone,
+        update_time,
+        create_time
+        from customer
+        <where>
+            enable= #{enable}
+            <if test="code != null and code != ''">
+                AND code LIKE CONCAT('%', #{code}, '%')
+            </if>
+            <if test="name != null and name != ''">
+                AND name LIKE CONCAT('%', #{name}, '%')
+            </if>
+            <if test="createUserId != null and createUserId!= ''">
+                AND create_user_id = #{createUserId}
+            </if>
+        </where>
+    </select>
+
+    <update id="updateCustomer">
+        UPDATE customer <!-- 假设表名为customers -->
+        <set>
+            <if test="companyId != null">
+                company_id = #{companyId},
+            </if>
+            <if test="code != null and code.trim() != ''">
+                code = #{code},
+            </if>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="name != null and name.trim() != ''">
+                name = #{name},
+            </if>
+            <if test="province != null">
+                province = #{province},
+            </if>
+            <if test="city != null">
+                city = #{city},
+            </if>
+            <if test="region != null">
+                region = #{region},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="level != null">
+                level = #{level},
+            </if>
+            <if test="scale != null">
+                scale = #{scale},
+            </if>
+            <if test="loyalty != null">
+                loyalty = #{loyalty},
+            </if>
+            <if test="totalAmount != null">
+                total_amount = #{totalAmount},
+            </if>
+            <if test="directTotalAmount != null">
+                direct_total_amount = #{directTotalAmount},
+            </if>
+            <if test="pickTotalAmount != null">
+                pick_total_amount = #{pickTotalAmount},
+            </if>
+            <if test="avgAmount != null">
+                avg_amount = #{avgAmount},
+            </if>
+            <if test="createUserId != null">
+                create_user_id = #{createUserId},
+            </if>
+            <if test="lastContactTime != null">
+                last_contact_time = #{lastContactTime},
+            </if>
+            <if test="lastOrderTime != null">
+                last_order_time = #{lastOrderTime},
+            </if>
+            <if test="address != null and address.trim() != ''">
+                address = #{address},
+            </if>
+            <if test="mobile != null and mobile.trim() != ''">
+                mobile = #{mobile},
+            </if>
+            <if test="telephone != null and telephone.trim() != ''">
+                telephone = #{telephone},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="enable!=null">
+                enable = #{enable}
+            </if>
+            <if test="customerTagsIds != null and customerTagsIds.trim() != ''">
+                customer_tags_ids = #{customerTagsIds},
+            </if>
+            <if test="projectsId != null and projectsId.trim() != ''">
+                projects_id = #{projectsId},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+</mapper>

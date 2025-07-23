@@ -1,0 +1,60 @@
+
+spring:
+  application:
+    name: mall-supplychain
+  profiles:
+    active: dev #默认为开发环境
+  servlet:
+    multipart:
+      enabled: true #开启文件上传
+      max-file-size: 10MB #限制文件上传大小为10M
+#  cloud:
+#    nacos:
+#      server-addr: http://127.0.0.1:8848 # Nacos地址
+#      file-extension: yaml # 文件后缀名
+
+mybatis:
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations:
+    - classpath:mapper/*.xml
+    - classpath*:com/**/mapper/*.xml
+    - classpath:dao/*.xml
+    - classpath:dao/**/*.xml
+
+
+logging:
+  level:
+    root: info
+    com.me.mall: debug
+
+
+jwt:
+  tokenHeader: Authorization #JWT存储的请求头
+  secret: mall-demo-secret #JWT加解密使用的密钥
+  expiration: 604800 #JWT的超期限时间(60*60*24*7)
+  tokenHead: 'Bearer'  #JWT负载中拿到开头
+#host:
+#  mall:
+#   admin: http://localhost:8080
+
+secure:
+  ignored:
+    urls: #安全路径白名单
+      - /swagger-ui/
+      - /you
+      - /love
+      - /l
+      - /swagger-resources/**
+      - /**/v2/api-docs
+      - /**/*.html
+      - /**/*.js
+      - /**/*.css
+      - /**/*.png
+      - /**/*.map
+      - /favicon.ico
+      - /actuator/**
+      - /druid/**
+      - /user/login
+      - /user/register
+      - /companyUser/login

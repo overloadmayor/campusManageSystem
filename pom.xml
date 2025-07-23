@@ -22,6 +22,7 @@
         <module>campus-gateway</module>
         <module>campus-utils</module>
         <module>campus-openfeign-api</module>
+        <module>campus-ai</module>
     </modules>
 
 

@@ -466,7 +466,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         //获取课次详细信息
         LessonAndTime lessonAndTime = null;
         for (LessonAndTime lesson : courseListTreeVo.getLessonList()) {
-            if (lesson.getId() == lessonId) {
+            if (lesson.getId().equals(lessonId) ) {
                 lessonAndTime = lesson;
                 break;
             }

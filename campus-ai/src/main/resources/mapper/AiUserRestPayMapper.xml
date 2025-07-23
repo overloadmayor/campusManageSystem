@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.campus.ai.mapper.AiUserRestPayMapper">
+    <update id="updateByStuId">
+        UPDATE students
+        <set>
+            <if test="balance != null">
+                balance = #{balance},
+            </if>
+        </set>
+        WHERE id = #{stuId}
+    </update>
+    <update id="minusBalanceByStuId">
+        UPDATE students
+        <set>
+            <if test="balance != null">
+                balance = balance - 1,
+            </if>
+        </set>
+        WHERE id = #{stuId}
+        and balance >= 1
+    </update>
+
+    <select id="getByStuId" resultType="com.campus.ai.entity.AiUserRestPay">
+        select id as stuId,balance
+        from students
+        where id = #{stuId}
+    </select>
+</mapper>

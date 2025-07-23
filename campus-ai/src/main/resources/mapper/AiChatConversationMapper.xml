@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.campus.ai.mapper.AiChatConversationMapper">
+    <insert id="insert">
+        insert into ai_chat_conversation (stu_id, conversation_id)
+        values (#{conversation.stuId}, #{conversation.conversationId})
+    </insert>
+    <update id="updateById">
+        update ai_chat_conversation
+        set update_time = #{conversation.updateTime}
+        where id = #{conversation.id}
+    </update>
+
+    <select id="getByUserIdAndConversationId"
+            resultType="com.campus.ai.entity.AIChatConversation">
+        select id, stu_id, conversation_id, create_time, update_time
+        from ai_chat_conversation
+        where stu_id = #{stuId}
+          and conversation_id =
+              #{conversationId}
+    </select>
+</mapper>
