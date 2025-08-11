@@ -125,6 +125,11 @@
             <artifactId>spring-ai-starter-model-zhipuai</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-advisors-vector-store</artifactId>
+        </dependency>
+
         <!-- MySQL -->
         <dependency>
             <groupId>mysql</groupId>
