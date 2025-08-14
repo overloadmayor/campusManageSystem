@@ -3,40 +3,49 @@ package com.campus.ai.service.impl;
 import com.campus.ai.common.dtos.ResponseResult;
 import com.campus.ai.common.enums.AppHttpCodeEnum;
 import com.campus.ai.entity.AIChatConversation;
+import com.campus.ai.entity.AiChatDetailConversation;
 import com.campus.ai.entity.AiUserRestPay;
 import com.campus.ai.exception.AIException;
 import com.campus.ai.mapper.AiChatConversationMapper;
 import com.campus.ai.mapper.AiUserRestPayMapper;
 import com.campus.ai.service.AIService;
+import com.campus.ai.service.ConsultantService;
+
+import com.campus.ai.tools.ChatTools;
 import com.campus.ai.utils.UserThreadLocalUtil;
-import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.memory.ChatMemory;
-import org.springframework.ai.image.ImagePrompt;
-import org.springframework.ai.zhipuai.ZhiPuAiImageModel;
+import dev.langchain4j.model.openai.OpenAiImageModel;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 @Service
 public class AIServiceImpl implements AIService {
-    @Autowired
-    private ZhiPuAiImageModel zhiPuAiImageModel;
-    @Autowired
-    private ChatClient chatClient;
+
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
     @Autowired
     private AiChatConversationMapper aiChatConversationMapper;
     @Autowired
     private AiUserRestPayMapper aiUserRestPayMapper;
+    @Autowired
+    private ConsultantService consultantService;
+    @Autowired
+    private OpenAiImageModel openAiImageModel;
+
 
     public static final String AICHAT="AICHAT:";
 
@@ -53,20 +62,22 @@ public class AIServiceImpl implements AIService {
         }
         aiUserRestPayMapper.minusBalanceByStuId(stu.getStuId());
 
-        String url = zhiPuAiImageModel.call(
-                new ImagePrompt(input)
-        ).getResult().getOutput().getUrl();
+        String url = openAiImageModel.generate(input).content().url().toString();
+
         return ResponseResult.okResult(url);
     }
 
     @Override
     public Flux<String> chat(String input, String conversationId) {
-        if(input==null){
-            throw new AIException("请输入聊天内容");
-        }
-        if(conversationId==null){
-            throw new AIException("请输入会话id");
-        }
+        //检查参数
+        check_params(input, conversationId);
+        //更新数据库
+        updateDB(conversationId);
+        return consultantService.chat(input,conversationId);
+
+    }
+
+    private void updateDB(String conversationId) {
         //扣减余额
         AiUserRestPay stu = aiUserRestPayMapper.getByStuId(UserThreadLocalUtil.getUser());
         if(stu.getBalance().compareTo(BigDecimal.ONE)<0){
@@ -104,11 +115,15 @@ public class AIServiceImpl implements AIService {
             stringRedisTemplate.expire(AICHAT + user, 10, TimeUnit.MINUTES);
             stringRedisTemplate.opsForSet().add(AICHAT + user, conversationId);
         }
+    }
 
-        return chatClient.prompt()
-                .user(input)
-                .advisors(a -> a.param(ChatMemory.CONVERSATION_ID, conversationId))
-                .stream().content();
+    private static void check_params(String input, String conversationId) {
+        if(input ==null){
+            throw new AIException("请输入聊天内容");
+        }
+        if(conversationId ==null){
+            throw new AIException("请输入会话id");
+        }
     }
 
     @Async("asyncExecutor")

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.campus.ai.mapper.AiChatDetailConversationMapper">
+    <resultMap id="AiChatConversionResultMap" type="com.campus.ai.entity.AiChatDetailConversation">
+        <result column="memory_id" property="memoryId"/>
+        <result column="content" property="content"/>
+        <result column="create_time" property="createTime"/>
+        <result column="delete" property="delete"/>
+    </resultMap>
+
+    <!-- 所有SQL中的表名更新为ai_chat_detail_conversation -->
+    <insert id="insert" >
+        INSERT INTO ai_chat_detail_conversation (memory_id, content, create_time, `delete`)
+        VALUES (#{memoryId}, #{content}, #{createTime}, 0)
+    </insert>
+
+    <update id="updateToDeleted">
+        UPDATE ai_chat_detail_conversation
+        SET `delete` = 1
+        WHERE memory_id = #{memoryId}
+          AND `delete` = 0
+    </update>
+
+    <insert id="insertOrUpdate" >
+        INSERT INTO ai_chat_detail_conversation (memory_id, content, `delete`)
+        VALUES (#{memoryId}, #{content}, 0)
+        ON DUPLICATE KEY UPDATE
+                             content = VALUES(content)
+    </insert>
+
+    <select id="selectByMemoryId" resultMap="AiChatConversionResultMap">
+        SELECT memory_id, content, create_time, `delete` FROM ai_chat_detail_conversation
+        WHERE memory_id = #{memoryId}
+          AND `delete` = 0
+    </select>
+
+    <select id="selectAll" resultMap="AiChatConversionResultMap">
+        SELECT memory_id, content, create_time, `delete` FROM ai_chat_detail_conversation
+        WHERE `delete` = 0
+        ORDER BY create_time DESC
+    </select>
+
+    <select id="selectAllWithDeleted" resultMap="AiChatConversionResultMap">
+        SELECT memory_id, content, create_time, `delete` FROM ai_chat_detail_conversation
+        ORDER BY create_time DESC
+    </select>
+</mapper>

@@ -1,10 +1,50 @@
 server:
   port: 6004
+langchain4j:
+  open-ai:
+    image-model:
+      model-name: cogview-4-250304
+      api-key: 13ef7484d9d544cbafbe3c5ddfd37b58.uN8RrpSV7G4lil1m
+      base-url: https://open.bigmodel.cn/api/paas/v4
+      log-requests: true
+      log-responses: true
+    chat-model:
+      model-name: qwen-plus
+      api-key: ${AI_DASHSCOPE_API_KEY}
+      base-url: https://dashscope.aliyuncs.com/compatible-mode/v1
+      log-requests: true
+      log-responses: true
+    streaming-chat-model:
+      model-name: qwen-plus
+      api-key: ${AI_DASHSCOPE_API_KEY}
+      base-url: https://dashscope.aliyuncs.com/compatible-mode/v1
+      log-requests: true
+      log-responses: true
+    embedding-model:
+      model-name: text-embedding-v3
+      api-key: ${AI_DASHSCOPE_API_KEY}
+      base-url: https://dashscope.aliyuncs.com/compatible-mode/v1
+      log-requests: true
+      log-responses: true
+      max-segments-per-batch: 10
+  community:
+    redis:
+      host: 8.138.246.2
+      port: 6380
+
+logging:
+  level:
+    dev.langchain4j: debug
 spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://8.138.246.2:3306/campus?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false
+    username: root
+    password: 998244353
   data:
     redis:
       host: 8.138.246.2
-      port: 6379
+      port: 6380
       password: 1714083619
       lettuce:
         pool:
@@ -12,36 +52,7 @@ spring:
           max-idle: 8    # 最大空闲连接
           min-idle: 0    # 最小空闲连接
           max-wait: 100  # 连接等待时间
-  ai:
-    zhipuai:
-      api-key: 13ef7484d9d544cbafbe3c5ddfd37b58.uN8RrpSV7G4lil1m
-      chat:
-        options:
-          model: cogview-4-250304
-    chat:
-      memory:
-        repository:
-          jdbc:
-            platform: mysql
-            initialize-schema: never
 
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://8.138.246.2:3306/campus?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
-    username: root
-    password: 998244353
-
-logging:
-  level:
-    com.campus: debug
-    org:
-      springframework:
-        ai:
-          chat:
-            client:
-              advisor: debug
-  pattern:
-    dateformat: HH:mm:ss:SSS
 
 
 mybatis:
